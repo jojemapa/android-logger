@@ -105,4 +105,4 @@ This methods are statically then you can call it from everywhere.
 
 ## Output
 
-![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/showcase-picture.png)
+![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/output.png)
