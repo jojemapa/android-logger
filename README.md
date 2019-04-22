@@ -105,6 +105,9 @@ This methods are statically then you can call it from everywhere.
 
 ## Output
 
+### Light theme
 ![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/output.png)
+
+### Dark Theme
 ![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/output-dark.png)
 
