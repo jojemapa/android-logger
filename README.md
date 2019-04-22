@@ -1,5 +1,7 @@
 # Android Logging - Timber Implementation
 
+This is my implementation for logging with files using Timber.
+
 #### [View Timber Library](https://github.com/JakeWharton/timber)
 
 [![Build Status](https://travis-ci.org/afollestad/material-dialogs.svg)](https://travis-ci.org/afollestad/material-dialogs)
@@ -8,80 +10,99 @@
 
 ---
 
-![Screenshots](https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase3.png)
+![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/showcase-picture.png)
 
-# Modules
+## FileLoggingTree extends Timber.DebugTree
 
-The core module is the fundamental module that you need in order to use this library. The others 
-are extensions to core.
+#### [FileLoggingTree](documentation/CORE.md)
 
-## Core
+The `FileLoggingTree extends Timber.DebugTree` is the more important, It contains everything you need. It contains all
+code for make file i personalize your logging files.
 
-[ ![Core](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:core.svg?label=core) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acore/_latestVersion)
 
-#### [Core Tutorial and Samples](documentation/CORE.md)
+## Implementation
 
-The `core` module contains everything you need to get started with the library. It contains all
-core and normal-use functionality.
-
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/basic_with_buttons.png" width="200px" />
+1. First add the Timber Library to `build.gralel`.
 
 ```gradle
 dependencies {
   ...
-  implementation 'com.afollestad.material-dialogs:core:2.8.1'
+  implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 ```
 
-## Input
+2. Second, make `Application` class for your app and register it on `Manifest`.
 
-[ ![Input](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:input.svg?label=input) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Ainput/_latestVersion)
+```java
+public class AndroidLogger extends Application {
 
-#### [Input Tutorial and Samples](documentation/INPUT.md)
- 
-The `input` module contains extensions to the core module, such as a text input dialog.
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (BuildConfig.DEBUG)
+            Timber.plant(new DebugLoggingTree());//Ignore this line for debug
+        else
+            Timber.plant(new FileLoggingTree());//Production debug with file
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/input.png" width="200px" />
-
-```gradle
-dependencies {
-  ...
-  implementation 'com.afollestad.material-dialogs:input:2.8.1'
-}
-```
- 
-## Files
-
-[ ![Files](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:files.svg?label=files) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Afiles/_latestVersion)
-
-#### [Files Tutorial and Samples](documentation/FILES.md)
-
-The `files` module contains extensions to the core module, such as a file and folder chooser.
-
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/file_chooser.png" width="200px" />
-
-```gradle
-dependencies {
-  ...
-  implementation 'com.afollestad.material-dialogs:files:2.8.1'
+    }
 }
 ```
 
-## Color
+and register and your manifest
 
-[ ![Color](https://img.shields.io/bintray/v/drummer-aidan/maven/material-dialogs:color.svg?label=color) ](https://bintray.com/drummer-aidan/maven/material-dialogs%3Acolor/_latestVersion)
+```xml
+<application
+        android:name=".AndroidLogger"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        .....
+        .....
+```
 
-#### [Color Tutorial and Samples](documentation/COLOR.md)
+3. Use it
 
-The `color` module contains extensions to the core module, such as a color chooser.
+```java
+public class MainActivity extends AppCompatActivity {
 
-<img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/color_chooser.png" width="200px" />
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-```gradle
-dependencies {
-  ...
-  implementation 'com.afollestad.material-dialogs:color:2.8.1'
+        Timber.v("onCreate verbose logs here");
+        Timber.d("onCreate debug logs here");
+        Timber.i("onCreate info logs here");
+        Timber.w("onCreate warning logs here");
+        Timber.e("onCreate[ error logs here");
+
+        Button loggerBtn = findViewById(R.id.loggerBtn);
+        Button ostiasBtn = findViewById(R.id.ostiasBtn);
+
+        loggerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Timber.v("loggerBtn verbose logs here");
+                Timber.d("loggerBtn debug logs here");
+                Timber.i("loggerBtn info logs here");
+                Timber.w("loggerBtn warning logs here");
+                Timber.e("loggerBtn error logs here");
+            }
+        });
+
+        ostiasBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Timber.v("ostiasBtn verbose logs here");
+                Timber.d("ostiasBtn debug logs here");
+                Timber.i("ostiasBtn info logs here");
+                Timber.w("ostiasBtn warning logs here");
+                Timber.e("ostiasBtn error logs here");
+            }
+        });
+
+    }
 }
 ```
 
-## DateTime
+This methods are statically then you can call it from everywhere.
+
+## Output
+
+![Screenshots](https://raw.githubusercontent.com/pjdepractica/android-logger/master/art/showcase-picture.png)
