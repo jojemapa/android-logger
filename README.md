@@ -22,7 +22,7 @@ code for make file i personalize your logging files.
 
 ## Implementation
 
-1. First add the Timber Library to `build.gralel`.
+1. First add the Timber Library to `build.gradle`.
 
 ```gradle
 dependencies {
